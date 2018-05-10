@@ -49,7 +49,7 @@ def make_tiny_image(image_paths):
         
     return tiny_images
 
-def nearest_neighbor_classify(train_image_feats, train_labels, test_image_feats):
+def nearest_neighbor(train_image_feats, train_labels, test_image_feats):
     k = 11
     test_predicts = []
     dist = distance.cdist(train_image_feats, test_image_feats, 'euclidean')
@@ -70,9 +70,7 @@ def nearest_neighbor_classify(train_image_feats, train_labels, test_image_feats)
 
 DATA_PATH = 'data/'
 
-CATEGORIES = ['Kitchen', 'Store', 'Bedroom', 'LivingRoom', 'Office',
-              'Industrial', 'Suburb', 'InsideCity', 'TallBuilding', 'Street',
-              'Highway', 'OpenCountry', 'Coast', 'Mountain', 'Forest']
+CATEGORIES = ['Kitchen', 'Store', 'Bedroom', 'LivingRoom', 'Office', 'Industrial', 'Suburb', 'InsideCity', 'TallBuilding', 'Street', 'Highway', 'OpenCountry', 'Coast', 'Mountain', 'Forest']
 
 CATE2ID = {v: k for k, v in enumerate(CATEGORIES)}
 
@@ -117,7 +115,7 @@ def main():
     test_image_feats = make_tiny_image(test_image)
 
     print("Training....")
-    predicted_categories = nearest_neighbor_classify(train_image_feats, train_labels, test_image_feats)
+    predicted_categories = nearest_neighbor(train_image_feats, train_labels, test_image_feats)
     
     print("Testing....")
     accuracy = float(len([x for x in zip(test_labels,predicted_categories) if x[0]== x[1]]))/float(len(test_labels))
